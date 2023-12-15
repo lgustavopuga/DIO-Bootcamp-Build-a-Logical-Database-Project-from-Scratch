@@ -44,6 +44,102 @@ Nesta etapa, traduzimos o esquema conceitual para um modelo relacional, criando 
 ### Exemplo do esquema lógico:
 Veja o exemplo de [esquema lógico](#etapa-2-mapeamento-do-esquema-conceitual-para-o-lógico).
 
+**Etapa 2: Mapeamento do Esquema Conceitual para o Lógico**
+
+Nesta etapa, você irá traduzir o esquema conceitual para o modelo relacional, criando as tabelas e definindo as relações entre elas.
+
+1. **Cliente:**
+   - Tabela: Cliente
+     - Atributos: ID_cliente (PK), Nome, Endereco, Telefone, etc.
+
+2. **Veículo:**
+   - Tabela: Veiculo
+     - Atributos: ID_veiculo (PK), ID_cliente (FK), Modelo, Placa, Ano, etc.
+
+3. **Serviço:**
+   - Tabela: Servico
+     - Atributos: ID_servico (PK), Desricao, Custo, Data, etc.
+
+4. **Peça:**
+   - Tabela: Peca
+     - Atributos: ID_peca (PK), Nome, Estoque, Preco, etc.
+
+5. **Funcionário:**
+   - Tabela: Funcionario
+     - Atributos: ID_funcionario (PK), Nome, Cargo, Salario, etc.
+
+6. **Relacionamentos:**
+   - Cliente (1) <-> (N) Veiculo
+     - Chave estrangeira: ID_cliente em Veiculo referenciando ID_cliente em Cliente.
+   - Veiculo (1) <-> (N) Servico
+     - Chave estrangeira: ID_veiculo em Servico referenciando ID_veiculo em Veiculo.
+   - Servico (N) <-> (N) Peça (N:N)
+     - Cria uma tabela de junção (por exemplo, Servico_Peca) com ID_servico e ID_peca.
+   - Servico (N) <-> (N) Funcionario (N:N)
+     - Cria uma tabela de junção (por exemplo, Servico_Funcionario) com ID_servico e ID_funcionario.
+
+7. **Ajustes:**
+   - Certifique-se de definir as chaves primárias e estrangeiras corretamente.
+   - Considere a normalização para evitar redundância e garantir a integridade dos dados.
+   - Decida sobre o uso de atributos derivados e multivalorados, se aplicável.
+
+Exemplo do esquema lógico:
+
+```plaintext
+Cliente
+| ID_cliente | Nome     | Endereco         | Telefone     |
+|------------|----------|------------------|--------------|
+| 1          | Cliente1 | Endereco1        | 123-456-7890 |
+| 2          | Cliente2 | Endereco2        | 987-654-3210 |
+...
+
+Veiculo
+| ID_veiculo | ID_cliente | Modelo   | Placa   | Ano  |
+|------------|------------|----------|---------|------|
+| 1          | 1          | Carro1   | ABC123  | 2019 |
+| 2          | 1          | Carro2   | XYZ789  | 2020 |
+...
+
+Servico
+| ID_servico | Descricao         | Custo | Data       |
+|------------|-------------------|-------|------------|
+| 1          | Troca de óleo     | 50.00 | 2023-01-01 |
+| 2          | Troca de pneus    | 100.00| 2023-01-05 |
+...
+
+Peca
+| ID_peca | Nome     | Estoque | Preco |
+|---------|----------|---------|-------|
+| 1       | Peca1    | 50      | 10.00 |
+| 2       | Peca2    | 30      | 20.00 |
+...
+
+Funcionario
+| ID_funcionario | Nome       | Cargo        | Salario |
+|----------------|------------|--------------|---------|
+| 1              | Func1      | Mecânico     | 2000.00 |
+| 2              | Func2      | Atendente    | 1500.00 |
+...
+
+Servico_Peca (Tabela de junção)
+| ID_servico | ID_peca |
+|------------|---------|
+| 1          | 1       |
+| 1          | 2       |
+| 2          | 2       |
+...
+
+Servico_Funcionario (Tabela de junção)
+| ID_servico | ID_funcionario |
+|------------|----------------|
+| 1          | 1              |
+| 2          | 1              |
+| 2          | 2              |
+...
+```
+
+Depois de criar esse mapeamento, você pode passar para a próxima etapa, que é a criação do script SQL para criar o esquema do banco de dados.
+
 ## Etapa 3: Criação do Script SQL
 
 Aqui está um exemplo básico de script SQL para criar o esquema do banco de dados:
